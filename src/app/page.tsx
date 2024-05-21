@@ -1,95 +1,77 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+// ** MUI Imports
+import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import CardHeader from "@mui/material/CardHeader";
+import CardContent from "@mui/material/CardContent";
+import Container from "@mui/material/Container";
+import { auth } from "@/auth";
+import { Button } from "@mui/material";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+const Home = async () => {
+    const session = await auth();
+    const user = session?.user;
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+    if (!user) {
+        redirect("/login");
+    }
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+    return (
+        <Grid container spacing={6} sx={{ justifyContent: "center" }}>
+            <Container
+                maxWidth="xs"
+                sx={{
+                    margin: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                }}
+            >
+                <h1>Home</h1>
+                {session ? (
+                    <Container
+                        maxWidth="xs"
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <Link href={"api/auth/signout"}>
+                            <Button variant="contained" sx={{ height: "50%" }}>
+                                Sign out
+                            </Button>
+                        </Link>
+                    </Container>
+                ) : (
+                    <Link href={"/login"}>
+                        <Button variant="contained" sx={{ height: "50%" }}>
+                            Login
+                        </Button>
+                    </Link>
+                )}
+            </Container>
+            <pre>{JSON.stringify(session)}</pre>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+            <Grid item xs={12} sx={{ padding: 0 }}>
+                <Card>
+                    <CardHeader title="Kick start your project 🚀"></CardHeader>
+                    <CardContent>
+                        <Typography sx={{ mb: 2 }}>
+                            All the best for your new project.
+                        </Typography>
+                        <Typography>
+                            Please make sure to read our Template Documentation
+                            to understand where to go from here and how to use
+                            our template.
+                        </Typography>
+                    </CardContent>
+                </Card>
+            </Grid>
+        </Grid>
+    );
+};
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
-}
+export default Home;

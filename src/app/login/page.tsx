@@ -1,19 +1,12 @@
 "use client";
-
-// ** React Imports
 import { ReactNode } from "react";
-
-// ** MUI Components
-import { Divider, styled } from "@mui/material";
+import { Button, Divider, styled } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography, { TypographyProps } from "@mui/material/Typography";
-
-// ** Layout Import
-
-// **  Components
+import MicrosoftIcon from "@mui/icons-material/Microsoft";
+import GoogleIcon from "@mui/icons-material/Google";
 import LoginForm from "./login-form";
-
-// ** Import your third-party login functions
+import { signIn } from "next-auth/react";
 
 const TypographyStyled = styled(Typography)<TypographyProps>(({ theme }) => ({
     fontWeight: 600,
@@ -38,11 +31,27 @@ const LoginPage = () => {
                         px: 4,
                     },
                     mt: (theme) => `${theme.spacing(5)} !important`,
-                    mb: (theme) => `${theme.spacing(7.5)} !important`,
+                    mb: (theme) => `${theme.spacing(5)} !important`,
                 }}
             >
                 o
             </Divider>
+            <Box display="flex" justifyContent="center" gap={2}>
+                <Button
+                    title="Microsoft"
+                    variant="contained"
+                    color="primary"
+                    startIcon={<MicrosoftIcon />}
+                    onClick={() => signIn("microsoft-entra-id")}
+                ></Button>
+                <Button
+                    title="Google"
+                    variant="contained"
+                    color="primary"
+                    endIcon={<GoogleIcon />}
+                    onClick={() => signIn("google")}
+                ></Button>
+            </Box>
         </>
     );
 };

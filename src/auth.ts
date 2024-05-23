@@ -1,5 +1,7 @@
 import NextAuth, { User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Entra from "next-auth/providers/microsoft-entra-id";
+import Google from "next-auth/providers/google";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -11,7 +13,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     type: "email",
                     placeholder: "Your@email.com",
                 },
-                password: { label: "Password", type: "password" },
+                password: {
+                    label: "Password",
+                    type: "password",
+                },
             },
             async authorize(credentials): Promise<User | null> {
                 //Acá simulamos la base de datos llamada users
@@ -40,6 +45,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     ? { id: user.id, name: user.name, email: user.email }
                     : null;
             },
+        }),
+        Entra({
+            clientId: process.env.AUTH_MICROSOFT_ENTRA_ID_ID,
+            clientSecret: process.env.AUTH_MICROSOFT_ENTRA_ID_SECRET,
+            tenantId: process.env.AUTH_MICROSOFT_ENTRA_ID_TENANT_ID,
+        }),
+        Google({
+            clientId: process.env.AUTH_GOOGLE_ID,
+            clientSecret: process.env.AUTH_GOOGLE_SECRET,
         }),
     ],
     pages: {

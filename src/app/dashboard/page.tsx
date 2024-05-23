@@ -1,25 +1,31 @@
 import React from "react";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import Link from "next/link";
-import { Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const Dashboard = async () => {
     const session = await auth();
     const user = session?.user;
 
     if (!user) {
-        redirect("/login");
+        redirect("/api/auth/signin?callbackUrl=/dashboard");
     }
 
     return (
         <div>
             <h1>Dashboard</h1>
-            <Link href={"api/auth/signout"}>
-                <Button variant="contained" sx={{ height: "50%" }}>
-                    Sign out
-                </Button>
-            </Link>
+            <Box>
+                <Typography variant="h3" color="initial">
+                    {user.name}
+                </Typography>
+                <img src={user?.image} alt={user.name} />
+                <Typography variant="h6" color="initial">
+                    {user.email}
+                </Typography>
+                <Typography variant="h6" color="initial">
+                    {user.id}
+                </Typography>
+            </Box>
         </div>
     );
 };

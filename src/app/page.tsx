@@ -38,13 +38,7 @@ const Home = async () => {
                             alignItems: "center",
                             justifyContent: "space-between",
                         }}
-                    >
-                        <Link href={"api/auth/signout"}>
-                            <Button variant="contained" sx={{ height: "50%" }}>
-                                Sign out
-                            </Button>
-                        </Link>
-                    </Container>
+                    ></Container>
                 ) : (
                     <Link href={"/login"}>
                         <Button variant="contained" sx={{ height: "50%" }}>

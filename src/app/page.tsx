@@ -1,32 +1,30 @@
-// ** MUI Imports
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
-import { auth } from "@/auth";
 import { Button } from "@mui/material";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 
 const Home = async () => {
     const session = await auth();
     const user = session?.user;
 
-    if (!user) {
+    if (!session) {
         redirect("/login");
     }
 
     return (
-        <Grid container spacing={6} sx={{ justifyContent: "center" }}>
+        <Grid container sx={{ justifyContent: "center" }}>
             <Container
-                maxWidth="xs"
                 sx={{
                     margin: 0,
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "space-between",
+                    justifyContent: "space-around",
                 }}
             >
                 <h1>Home</h1>
@@ -47,8 +45,9 @@ const Home = async () => {
                     </Link>
                 )}
             </Container>
-            <pre>{JSON.stringify(session)}</pre>
-
+            <div>
+                <pre>{JSON.stringify(session, null, 2)}</pre>
+            </div>
             <Grid item xs={12} sx={{ padding: 0 }}>
                 <Card>
                     <CardHeader title="Kick start your project 🚀"></CardHeader>

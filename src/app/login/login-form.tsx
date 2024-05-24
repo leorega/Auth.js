@@ -1,4 +1,4 @@
-// ** React and Next
+// ** React and Ne
 import { useState } from "react";
 import Link from "next/link";
 import { useForm, Controller } from "react-hook-form";
@@ -52,19 +52,25 @@ function LoginForm() {
     const router = useRouter();
 
     const onSubmit = handleSubmit(async (data) => {
-        const res = await signIn("credentials", {
-            email: data.email,
-            password: data.password,
-            redirect: false,
-        });
+        try {
+            const res = await signIn("credentials", {
+                email: data.email,
+                password: data.password,
+                redirect: false,
+            });
 
-        if (res?.error) {
-            alert(res.error);
-            return;
-        } else {
-            router.push("/");
+            if (res?.error) {
+                alert(res.error);
+                return;
+            } else {
+                router.push("/");
+            }
+        } catch (error) {
+            console.error("Error during sign-in:", error);
+            alert("Error during sign-in. Please try again.");
+        } finally {
+            reset();
         }
-        reset();
     });
 
     return (

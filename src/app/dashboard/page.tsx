@@ -8,22 +8,22 @@ const Dashboard = async () => {
     const user = session?.user;
 
     if (!user) {
-        redirect("/api/auth/signin?callbackUrl=/dashboard");
+        redirect("/login");
     }
 
     return (
         <div>
             <h1>Dashboard</h1>
             <Box>
-                <Typography variant="h3" color="initial">
-                    {user.name}
-                </Typography>
-                <img src={user?.image} alt={user.name} />
-                <Typography variant="h6" color="initial">
-                    {user.email}
+                <img src={user?.image} alt={user?.name} />
+                <Typography variant="h5" color="initial">
+                    {user?.name}
                 </Typography>
                 <Typography variant="h6" color="initial">
-                    {user.id}
+                    {user?.email}
+                </Typography>
+                <Typography variant="h6" color="initial">
+                    {user?.id}
                 </Typography>
             </Box>
         </div>

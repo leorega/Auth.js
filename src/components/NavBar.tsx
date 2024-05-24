@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { auth, signOut } from "@/auth";
 import { Button } from "@mui/material";
 
@@ -15,7 +15,7 @@ const NavBar = async () => {
                 <li>
                     <Link href={"/dashboard"}>Dashboard</Link>
                 </li>
-                {session?.user && (
+                {session && (
                     <li>
                         <form
                             action={async () => {

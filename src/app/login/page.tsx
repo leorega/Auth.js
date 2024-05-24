@@ -42,14 +42,16 @@ const LoginPage = () => {
                     variant="contained"
                     color="primary"
                     startIcon={<MicrosoftIcon />}
-                    onClick={() => signIn("microsoft-entra-id")}
+                    onClick={() =>
+                        signIn("microsoft-entra-id", { callbackUrl: "/" })
+                    }
                 ></Button>
                 <Button
                     title="Google"
                     variant="contained"
                     color="primary"
                     endIcon={<GoogleIcon />}
-                    onClick={() => signIn("google")}
+                    onClick={() => signIn("google", { callbackUrl: "/" })}
                 ></Button>
             </Box>
         </>

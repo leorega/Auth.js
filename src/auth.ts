@@ -4,6 +4,22 @@ import Entra from "next-auth/providers/microsoft-entra-id";
 import Google from "next-auth/providers/google";
 import { Provider } from "next-auth/providers";
 
+//Acá simulamos la base de datos llamada users
+const users = [
+    {
+        id: "1",
+        name: "admin",
+        email: "admin@prueba.com",
+        password: "admin",
+    },
+    {
+        id: "2",
+        name: "user",
+        email: "user@prueba.com",
+        password: "user",
+    },
+];
+
 const providers: Provider[] = [
     Credentials({
         name: "Credentials",
@@ -18,24 +34,7 @@ const providers: Provider[] = [
                 type: "password",
             },
         },
-        authorize: async (credentials) => {
-            //Acá simulamos la base de datos llamada users
-            const users = [
-                {
-                    id: "1",
-                    name: "admin",
-                    email: "admin@prueba.com",
-                    password: "admin",
-                },
-                {
-                    id: "2",
-                    name: "user",
-                    email: "user@prueba.com",
-                    password: "user",
-                },
-            ];
-
-            // Esta sería la consulta a la base de datos
+        authorize: (credentials) => {
             const user = users.find(
                 (user) =>
                     user.email === credentials?.email &&
@@ -65,5 +64,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     pages: {
         signIn: "/login",
     },
+    session: { strategy: "jwt" },
     secret: process.env.AUTH_SECRET,
 });

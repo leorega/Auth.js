@@ -56,14 +56,13 @@ function LoginForm() {
             const res = await signIn("credentials", {
                 email: data.email,
                 password: data.password,
-                redirect: false,
             });
 
             if (res?.error) {
                 alert(res.error);
                 return;
             } else {
-                router.push("/");
+                router.push("http://localhost:3000/dashboard");
             }
         } catch (error) {
             console.error("Error during sign-in:", error);
@@ -111,7 +110,7 @@ function LoginForm() {
                             color: "error.main",
                         }}
                     >
-                        {errors.email.message}
+                        <>{errors.email.message}</>
                     </FormHelperText>
                 )}
             </FormControl>
@@ -162,7 +161,7 @@ function LoginForm() {
                             color: "error.main",
                         }}
                     >
-                        {errors.password.message}
+                        <>{errors.password.message}</>
                     </FormHelperText>
                 )}
             </FormControl>

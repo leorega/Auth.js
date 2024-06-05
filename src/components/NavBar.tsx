@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import { auth, signOut } from "@/auth";
 import { Button } from "@mui/material";
 

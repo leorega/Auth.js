@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
@@ -15,7 +16,12 @@ const Dashboard = async () => {
         <div>
             <h1>Dashboard</h1>
             <Box>
-                <img src={user?.image} alt={user?.name} />
+                <img
+                    src={user?.image ? user.image : ""}
+                    alt={user?.name ? user.name : ""}
+                    width={100}
+                    height={100}
+                />
                 <Typography variant="h5" color="initial">
                     {user?.name}
                 </Typography>
